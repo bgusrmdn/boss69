@@ -1483,6 +1483,28 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Initialize
   track.style.cursor = "grab";
+  
+  // Preload images for better performance
+  items.forEach((item, index) => {
+    const img = item.querySelector('img');
+    if (img && img.src) {
+      // Add loading animation delay for staggered effect
+      img.style.animationDelay = `${index * 0.1}s`;
+      
+      // Handle image load error
+      img.addEventListener('error', () => {
+        img.style.background = 'linear-gradient(135deg, #ff4757, #ff6b7a)';
+        img.style.opacity = '1';
+        console.warn('Banner image failed to load:', img.src);
+      });
+      
+      // Handle successful image load
+      img.addEventListener('load', () => {
+        img.style.opacity = '1';
+      });
+    }
+  });
+  
   goTo(0);
   startAuto();
   
