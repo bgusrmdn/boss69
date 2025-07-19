@@ -1,0 +1,629 @@
+/* ==========================================================================
+   HOKIRAJA - OPTIMIZED CSS ENHANCEMENTS
+   Animasi, Transisi, dan Optimasi Mobile/Desktop yang Keren
+   ========================================================================== */
+
+/* Enhanced CSS Variables */
+:root {
+  /* Enhanced animations */
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.6s;
+  --animation-ultra-slow: 1.2s;
+  
+  /* Enhanced easing curves */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Enhanced shadows */
+  --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --shadow-glow-gold: 0 0 20px rgba(255, 193, 7, 0.4);
+  --shadow-glow-blue: 0 0 20px rgba(0, 212, 255, 0.4);
+  
+  /* Mobile breakpoints */
+  --mobile-small: 320px;
+  --mobile-medium: 375px;
+  --mobile-large: 414px;
+  --tablet: 768px;
+  --desktop-small: 992px;
+  --desktop-large: 1200px;
+}
+
+/* ==========================================================================
+   ENHANCED ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+
+@keyframes slideInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-200deg) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes heartbeat {
+  0%, 50%, 100% {
+    transform: scale(1);
+  }
+  25%, 75% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes neonGlow {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px var(--primary-gold),
+      0 0 10px var(--primary-gold),
+      0 0 15px var(--primary-gold);
+  }
+  50% {
+    text-shadow: 
+      0 0 10px var(--primary-gold),
+      0 0 20px var(--primary-gold),
+      0 0 30px var(--primary-gold),
+      0 0 40px var(--primary-gold);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+/* ==========================================================================
+   ENHANCED BUTTON STYLES
+   ========================================================================== */
+
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  box-shadow: var(--shadow-medium);
+  cursor: pointer;
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--animation-slow) var(--ease-out-expo);
+}
+
+.btn-enhanced:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-large), var(--shadow-glow-gold);
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.btn-enhanced:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: var(--animation-fast);
+}
+
+/* Specialized button variants */
+.btn-glow {
+  animation: heartbeat 2s infinite;
+}
+
+.btn-wiggle:hover {
+  animation: wiggle 0.6s ease-in-out;
+}
+
+.btn-bounce:hover {
+  animation: bounceIn 0.6s var(--ease-bounce);
+}
+
+/* ==========================================================================
+   ENHANCED CARD STYLES
+   ========================================================================== */
+
+.card-enhanced {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+  opacity: 0;
+  transition: opacity var(--animation-normal);
+}
+
+.card-enhanced:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-large), var(--shadow-glow-gold);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.card-enhanced:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   ENHANCED NAVIGATION
+   ========================================================================== */
+
+.nav-enhanced {
+  backdrop-filter: blur(20px);
+  background: rgba(10, 10, 10, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--animation-normal) var(--ease-out-expo);
+}
+
+.nav-enhanced.scrolled {
+  background: rgba(10, 10, 10, 0.95);
+  box-shadow: var(--shadow-large);
+}
+
+.nav-item-enhanced {
+  position: relative;
+  padding: 12px 16px;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  border-radius: 8px;
+}
+
+.nav-item-enhanced::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-gold);
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  transform: translateX(-50%);
+}
+
+.nav-item-enhanced:hover {
+  background: rgba(255, 193, 7, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-item-enhanced:hover::before {
+  width: 80%;
+}
+
+.nav-item-enhanced.active::before {
+  width: 100%;
+}
+
+/* ==========================================================================
+   ENHANCED FORMS
+   ========================================================================== */
+
+.form-group-enhanced {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.form-control-enhanced {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  backdrop-filter: blur(10px);
+}
+
+.form-control-enhanced:focus {
+  outline: none;
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1), var(--shadow-glow-gold);
+  transform: translateY(-2px);
+}
+
+.form-label-enhanced {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  color: var(--text-muted);
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  pointer-events: none;
+  background: rgba(10, 10, 10, 0.8);
+  padding: 0 8px;
+}
+
+.form-control-enhanced:focus + .form-label-enhanced,
+.form-control-enhanced:not(:placeholder-shown) + .form-label-enhanced {
+  top: -8px;
+  font-size: 12px;
+  color: var(--primary-gold);
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   ENHANCED MOBILE OPTIMIZATIONS
+   ========================================================================== */
+
+/* Touch-friendly buttons for mobile */
+@media (max-width: 768px) {
+  .btn-enhanced {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 14px 20px;
+  }
+  
+  .nav-item-enhanced {
+    min-height: 44px;
+    padding: 14px 16px;
+  }
+  
+  .form-control-enhanced {
+    font-size: 16px; /* Prevent zoom on iOS */
+    min-height: 48px;
+  }
+}
+
+/* Enhanced mobile navigation */
+.mobile-nav-enhanced {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 0 24px 0; /* Account for home indicator */
+  z-index: 1000;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  border-radius: 12px;
+  position: relative;
+}
+
+.mobile-nav-item::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-gold);
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.95);
+  background: rgba(255, 193, 7, 0.1);
+}
+
+.mobile-nav-item.active {
+  color: var(--primary-gold);
+}
+
+.mobile-nav-item.active::before {
+  width: 60%;
+}
+
+/* ==========================================================================
+   ENHANCED LOADING ANIMATIONS
+   ========================================================================== */
+
+.loading-enhanced {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 193, 7, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-gold);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-gold);
+  animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   ENHANCED SCROLL ANIMATIONS
+   ========================================================================== */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all var(--animation-slow) var(--ease-out-expo);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all var(--animation-slow) var(--ease-out-expo);
+}
+
+.scroll-reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all var(--animation-slow) var(--ease-out-expo);
+}
+
+.scroll-reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   ENHANCED TOOLTIPS
+   ========================================================================== */
+
+.tooltip-enhanced {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip-enhanced::before,
+.tooltip-enhanced::after {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--animation-normal) var(--ease-out-expo);
+  transform: translateY(8px);
+}
+
+.tooltip-enhanced::before {
+  content: attr(data-tooltip);
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 1001;
+}
+
+.tooltip-enhanced::after {
+  content: '';
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  z-index: 1001;
+}
+
+.tooltip-enhanced:hover::before,
+.tooltip-enhanced:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   ENHANCED GLASSMORPHISM EFFECTS
+   ========================================================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-nav {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   ENHANCED RESPONSIVE UTILITIES
+   ========================================================================== */
+
+/* Smooth scrolling for all */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary-gold);
+  outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Enhanced print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
