@@ -5,8 +5,8 @@
     <?php
     // Dapatkan nama file saat ini untuk menyorot menu yang aktif
     $current_page = basename($_SERVER['PHP_SELF'], '.php');
-    // Tentukan navigasi footer berdasarkan status login
-    if (isset($_SESSION['user_id'])) {
+// Tentukan navigasi footer berdasarkan status login
+if (isset($_SESSION['user_id'])) {
     ?>
         <a href="beranda" class="nav-item <?php echo ($current_page == 'beranda') ? 'active' : ''; ?>">
             <div class="nav-icon-block"><i class="fas fa-home"></i></div>
@@ -29,7 +29,7 @@
             <span class="nav-text">Profil</span>
         </a>
     <?php
-    } else {
+} else {
     ?>
         <a href="index" class="nav-item <?php echo ($current_page == 'index') ? 'active' : ''; ?>">
             <div class="nav-icon-block"><i class="fas fa-home"></i></div>
@@ -52,24 +52,27 @@
             <span class="nav-text">Login</span>
         </a>
     <?php
-    }
-    ?>
+}
+?>
 </nav>
 <footer class="main-footer text-center p-4 mt-5">
     <div class="container">
         <?php
-        $show_footer = in_array(basename($_SERVER['PHP_SELF']), ['index.php', 'beranda.php']);
-        if ($show_footer):
-            // Tampilkan payment & provider di footer
-            require_once __DIR__ . '/../includes/db_connect.php';
-            $ppinfo = $conn->query("SELECT * FROM payment_provider_info ORDER BY type, sort_order, name");
-            $payments = [];
-            $providers = [];
-            foreach ($ppinfo as $row) {
-                if ($row['type'] === 'payment') $payments[] = $row;
-                else if ($row['type'] === 'provider') $providers[] = $row;
-            }
-        ?>
+    $show_footer = in_array(basename($_SERVER['PHP_SELF']), ['index.php', 'beranda.php']);
+if ($show_footer):
+    // Tampilkan payment & provider di footer
+    require_once __DIR__ . '/../includes/db_connect.php';
+    $ppinfo = $conn->query("SELECT * FROM payment_provider_info ORDER BY type, sort_order, name");
+    $payments = [];
+    $providers = [];
+    foreach ($ppinfo as $row) {
+        if ($row['type'] === 'payment') {
+            $payments[] = $row;
+        } elseif ($row['type'] === 'provider') {
+            $providers[] = $row;
+        }
+    }
+?>
             <div class="footer-ppinfo container py-2 mb-3">
                 <?php if ($payments): ?>
                     <div class="mb-2 d-flex align-items-center justify-content-center gap-2">
