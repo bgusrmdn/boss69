@@ -1,0 +1,23 @@
+{
+    "name": "bgusrmdn/hokiraja-website",
+    "description": "HOKIRAJA - Situs Game Online Terpercaya",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-mysqli": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo 'HOKIRAJA website deployment complete!'"
+        ]
+    },
+    "extra": {
+        "heroku": {
+            "document-root": ".",
+            "index-document": "index.php"
+        }
+    }
+}
