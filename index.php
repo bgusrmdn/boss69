@@ -28,27 +28,56 @@ $categories_query_result = $conn->query("SELECT * FROM categories WHERE is_activ
         </div>
     </div>
     <!-- SLIDER BANNER PROMO OTOMATIS -->
-    <?php
-    $slider = $conn->query("SELECT * FROM banner_slider WHERE is_active=1 ORDER BY sort_order, id");
-    $slider_dir = __DIR__ . '/assets/images/promos/';
-    $slider_url = base_url('assets/images/promos/');
-    $ada = false;
-    if ($slider && $slider->num_rows > 0):
-        foreach ($slider as $row):
-            $img_path = $slider_dir . $row['image'];
-            if (file_exists($img_path)) {
-                $ada = true;
-    ?>
-                <div class="slider-item"><img src="/assets/images/promos/<?= htmlspecialchars($row['image']) ?>" alt="Banner Promo"></div>
-        <?php
-            }
-        endforeach;
-    endif;
-    if (!$ada): ?>
-        <div class="slider-item"><img src="<?= $slider_url ?>slider1.jpg" alt="Promo Dummy">
-            <div class="text-danger text-center small">Banner tidak ditemukan atau file corrupt.</div>
+    <div class="promo-slider" id="promoSlider">
+        <div class="slider-track" id="sliderTrack">
+            <?php
+            $slider = $conn->query("SELECT * FROM banner_slider WHERE is_active=1 ORDER BY sort_order, id");
+            $slider_dir = __DIR__ . '/assets/images/promos/';
+            $slider_url = base_url('assets/images/promos/');
+            $slider_items = [];
+            $ada = false;
+            
+            if ($slider && $slider->num_rows > 0):
+                while ($row = $slider->fetch_assoc()):
+                    $img_path = $slider_dir . $row['image'];
+                    if (file_exists($img_path)) {
+                        $ada = true;
+                        $slider_items[] = $row;
+            ?>
+                        <div class="slider-item">
+                            <img src="<?= $slider_url . htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['title'] ?? 'Banner Promo') ?>">
+                        </div>
+            <?php
+                    }
+                endwhile;
+            endif;
+            
+            if (!$ada): ?>
+                <div class="slider-item">
+                    <img src="<?= $slider_url ?>slider1.jpg" alt="Promo Default">
+                </div>
+                <div class="slider-item">
+                    <img src="<?= $slider_url ?>slider2.jpg" alt="Promo Default 2">
+                </div>
+                <div class="slider-item">
+                    <img src="<?= $slider_url ?>slider3.jpg" alt="Promo Default 3">
+                </div>
+            <?php endif; ?>
         </div>
-    <?php endif; ?>
+        
+        <?php if ($ada && count($slider_items) > 1): ?>
+        <div class="slider-dots" id="sliderDots">
+            <?php for ($i = 0; $i < count($slider_items); $i++): ?>
+                <button type="button" class="<?= $i === 0 ? 'active' : '' ?>" data-slide="<?= $i ?>"></button>
+            <?php endfor; ?>
+        </div>
+        <?php elseif (!$ada): ?>
+        <div class="slider-dots" id="sliderDots">
+            <button type="button" class="active" data-slide="0"></button>
+            <button type="button" data-slide="1"></button>
+            <button type="button" data-slide="2"></button>
+        </div>
+        <?php endif; ?>
     </div>
 
     <div class="d-grid gap-2 d-lg-none mb-4">

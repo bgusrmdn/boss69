@@ -1331,50 +1331,169 @@ if (floatingMenu) {
 document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".promo-slider");
   if (!slider) return;
+  
   const track = slider.querySelector(".slider-track");
   const items = slider.querySelectorAll(".slider-item");
   const dotsContainer = slider.querySelector(".slider-dots");
+  
+  if (!track || !items.length || !dotsContainer) return;
+  
   let current = 0;
   let interval = null;
-  // Buat dots
-  dotsContainer.innerHTML = "";
-  items.forEach((_, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = i === 0 ? "active" : "";
-    btn.addEventListener("click", () => goTo(i));
-    dotsContainer.appendChild(btn);
-  });
+  
+  // Setup dots if they don't exist or need updating
+  if (dotsContainer.children.length !== items.length) {
+    dotsContainer.innerHTML = "";
+    items.forEach((_, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = i === 0 ? "active" : "";
+      btn.setAttribute('data-slide', i);
+      btn.addEventListener("click", () => goTo(i));
+      dotsContainer.appendChild(btn);
+    });
+  }
+  
   const dots = dotsContainer.querySelectorAll("button");
+  
+  // Add click handlers to existing dots
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => goTo(i));
+  });
+  
   function goTo(idx) {
+    if (idx < 0 || idx >= items.length) return;
     current = idx;
     track.style.transform = `translateX(-${idx * 100}%)`;
     dots.forEach((d, i) => d.classList.toggle("active", i === idx));
   }
+  
   function next() {
     goTo((current + 1) % items.length);
   }
+  
+  function prev() {
+    goTo((current - 1 + items.length) % items.length);
+  }
+  
   function startAuto() {
     if (interval) clearInterval(interval);
-    interval = setInterval(next, 3000);
+    if (items.length > 1) {
+      interval = setInterval(next, 4000); // Slightly longer for better UX
+    }
   }
-  // Swipe support (mobile)
+  
+  // Enhanced touch/swipe support for mobile
   let startX = null;
+  let startY = null;
+  let isDragging = false;
+  
   track.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
-  });
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    if (interval) clearInterval(interval);
+  }, { passive: true });
+  
+  track.addEventListener("touchmove", (e) => {
+    if (!isDragging || !startX) return;
+    
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const diffX = Math.abs(currentX - startX);
+    const diffY = Math.abs(currentY - startY);
+    
+    // Only handle horizontal swipes
+    if (diffX > diffY && diffX > 10) {
+      e.preventDefault(); // Prevent vertical scrolling
+    }
+  }, { passive: false });
+  
   track.addEventListener("touchend", (e) => {
-    if (startX === null) return;
+    if (!isDragging || startX === null) return;
+    
     const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 40) goTo((current - 1 + items.length) % items.length);
-    else if (dx < -40) next();
+    const threshold = 50; // Minimum swipe distance
+    
+    if (Math.abs(dx) > threshold) {
+      if (dx > 0) {
+        prev(); // Swipe right - go to previous
+      } else {
+        next(); // Swipe left - go to next
+      }
+    }
+    
     startX = null;
+    startY = null;
+    isDragging = false;
+    startAuto();
+  }, { passive: true });
+  
+  // Mouse drag support for desktop
+  let isMouseDown = false;
+  let mouseStartX = null;
+  
+  track.addEventListener("mousedown", (e) => {
+    isMouseDown = true;
+    mouseStartX = e.clientX;
+    track.style.cursor = "grabbing";
+    if (interval) clearInterval(interval);
+  });
+  
+  track.addEventListener("mousemove", (e) => {
+    if (!isMouseDown || mouseStartX === null) return;
+    e.preventDefault();
+  });
+  
+  track.addEventListener("mouseup", (e) => {
+    if (!isMouseDown || mouseStartX === null) return;
+    
+    const dx = e.clientX - mouseStartX;
+    const threshold = 50;
+    
+    if (Math.abs(dx) > threshold) {
+      if (dx > 0) {
+        prev();
+      } else {
+        next();
+      }
+    }
+    
+    isMouseDown = false;
+    mouseStartX = null;
+    track.style.cursor = "grab";
     startAuto();
   });
+  
+  track.addEventListener("mouseleave", () => {
+    if (isMouseDown) {
+      isMouseDown = false;
+      mouseStartX = null;
+      track.style.cursor = "grab";
+      startAuto();
+    }
+  });
+  
+  // Pause on hover
+  slider.addEventListener("mouseenter", () => {
+    if (interval) clearInterval(interval);
+  });
+  
+  slider.addEventListener("mouseleave", startAuto);
+  
+  // Initialize
+  track.style.cursor = "grab";
   goTo(0);
   startAuto();
-  slider.addEventListener("mouseenter", () => clearInterval(interval));
-  slider.addEventListener("mouseleave", startAuto);
+  
+  // Handle window resize
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      goTo(current); // Refresh position after resize
+    }, 250);
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
