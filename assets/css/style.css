@@ -133,7 +133,7 @@ body::before {
     rgba(255, 193, 7, 0.1),
     rgba(0, 212, 255, 0.1)
   );
-  backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-around;
   border-top: 1px solid #333;
@@ -181,7 +181,7 @@ body.dark-theme {
   z-index: 1020;
   box-shadow: var(--shadow-primary);
   transition: var(--transition-smooth);
-  padding: 10px 0;
+    padding: 10px 0;
 }
 
 .main-header::before {
@@ -202,9 +202,10 @@ body.dark-theme {
 
 /* Header untuk user yang login, juga harus sticky/fixed */
 .user-main-header {
-  background: linear-gradient(135deg, 
-    rgba(15, 32, 58, 0.96) 0%, 
-    rgba(26, 44, 68, 0.98) 25%, 
+  background: linear-gradient(
+    135deg,
+    rgba(15, 32, 58, 0.96) 0%,
+    rgba(26, 44, 68, 0.98) 25%,
     rgba(34, 18, 69, 0.97) 50%,
     rgba(58, 24, 85, 0.95) 75%,
     rgba(15, 32, 58, 0.96) 100%
@@ -217,49 +218,64 @@ body.dark-theme {
   top: 0;
   width: 100%;
   z-index: 1020;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(255, 193, 7, 0.1),
-    0 0 60px rgba(58, 134, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 193, 7, 0.1),
+    0 0 60px rgba(58, 134, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border-bottom: 2px solid transparent;
-  border-image: linear-gradient(90deg, 
-    rgba(255, 193, 7, 0.6), 
-    rgba(58, 134, 255, 0.6), 
-    rgba(255, 65, 108, 0.6),
-    rgba(255, 193, 7, 0.6)
-  ) 1;
+  border-image: linear-gradient(
+      90deg,
+      rgba(255, 193, 7, 0.6),
+      rgba(58, 134, 255, 0.6),
+      rgba(255, 65, 108, 0.6),
+      rgba(255, 193, 7, 0.6)
+    )
+    1;
   position: relative;
   overflow: hidden;
 }
 
 .user-main-header::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 193, 7, 0.1), 
-    rgba(58, 134, 255, 0.1), 
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 193, 7, 0.1),
+    rgba(58, 134, 255, 0.1),
     transparent
   );
   animation: navbarShimmer 8s infinite;
 }
 
 @keyframes navbarGradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 100% 25%; }
-  50% { background-position: 50% 100%; }
-  75% { background-position: 25% 0%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 25%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 25% 0%;
+  }
 }
 
 @keyframes navbarShimmer {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: -100%; }
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }
 
 /* === SOLUSI TUMPANG TINDIH: Tambahkan margin-top pada elemen <main> === */
@@ -273,7 +289,7 @@ body.dark-theme {
 main.container {
   margin-top: 110px; /* Kompensasi tinggi header. Sesuaikan nilai ini! */
   /* Anda bisa juga menambahkan margin-bottom jika footer mobile menutupi konten */
-  animation: fadeInUp 0.8s ease-out;
+    animation: fadeInUp 0.8s ease-out;
 }
 /* --- Dropdown untuk Desktop --- */
 .main-nav {
@@ -347,7 +363,7 @@ main.container {
   z-index: 1000;
   box-shadow: var(--shadow-primary);
   padding: 5px 0;
-  animation: fadeInUp 0.3s ease-out;
+    animation: fadeInUp 0.3s ease-out;
 }
 .dropdown-menu-custom .dropdown-item {
   display: block;
@@ -358,10 +374,10 @@ main.container {
 }
 
 .dropdown-menu-custom .dropdown-item:hover {
-  background: linear-gradient(90deg, rgba(255, 193, 7, 0.1), transparent);
+ background: linear-gradient(90deg, rgba(255, 193, 7, 0.1), transparent);
   color: var(--primary-gold);
-  transition: var(--transition-smooth);
-  transform: translateX(10px);
+    transition: var(--transition-smooth);
+      transform: translateX(10px);
 }
 
 /* --- Menu untuk Mobile (Off-canvas) --- */
@@ -454,7 +470,7 @@ main.container {
 }
 .main-game-content-mobile {
   display: block; /* Tampilkan di mobile secara default */
-  animation: fadeInUp 0.8s ease-out;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 @media (min-width: 992px) {
@@ -463,11 +479,11 @@ main.container {
     grid-template-columns: 250px 1fr;
     gap: 15px;
     margin-top: 2rem;
-    animation: fadeInUp 0.8s ease-out;
+        animation: fadeInUp 0.8s ease-out;
   }
   .main-game-content-mobile {
     display: none; /* Sembunyikan layout mobile di desktop */
-    animation: fadeInUp 0.8s ease-out;
+      animation: fadeInUp 0.8s ease-out;
   }
 }
 
@@ -664,7 +680,7 @@ main.container {
 }
 .mobile-footer-nav .nav-item i {
   font-size: 1.2rem;
-  transition: var(--transition-smooth);
+    transition: var(--transition-smooth);
 }
 .mobile-footer-nav .nav-item.active {
   color: var(--primary-gold);
@@ -931,7 +947,9 @@ main.container {
   font-size: 1.2rem;
 }
 .user-main-header .bottom-bar {
-  background-color: #000;
+  background: linear-gradient(90deg, #232526 0%, #414345 40%, #1e3c72 100%);
+  box-shadow: 0 4px 24px rgba(30, 60, 114, 0.18);
+  transition: background 0.3s;
   padding: 10px 0;
 }
 .header-icon-link {
@@ -954,8 +972,69 @@ main.container {
 
 .category-scroll-wrapper {
   overflow-x: auto;
-  background-color: #1a1a1a;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 32, 58, 0.95),
+    rgba(26, 44, 68, 0.98),
+    rgba(34, 18, 69, 0.96),
+    rgba(58, 24, 85, 0.94),
+    rgba(15, 32, 58, 0.95)
+  );
+  background-size: 400% 400%;
+  animation: categoryScrollFlow 12s ease-in-out infinite;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 193, 7, 0.1),
+    0 0 40px rgba(58, 134, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
   padding: 5px;
+}
+
+.category-scroll-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 193, 7, 0.1),
+    rgba(58, 134, 255, 0.1),
+    transparent
+  );
+  animation: categoryScrollShimmer 8s infinite;
+  pointer-events: none;
+}
+
+@keyframes categoryScrollFlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 25%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 25% 0%;
+  }
+}
+
+@keyframes categoryScrollShimmer {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }
 .category-scroll-wrapper::-webkit-scrollbar {
   height: 3px;
@@ -1007,7 +1086,7 @@ main.container {
   color: var(--bg-primary);
   font-weight: bold;
   border-color: var(--primary-gold);
-  box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-glow);
   animation: pulse 2s infinite;
 }
 
@@ -1083,8 +1162,8 @@ main.container {
   .provider-card img,
   .provider-logo-item img {
     max-height: 120px;
-    transition: var(--transition-smooth);
-    filter: brightness(1.1) contrast(1.1);
+  transition: var(--transition-smooth);
+  filter: brightness(1.1) contrast(1.1);
   }
 }
 .provider-card .fallback-text,
@@ -1676,8 +1755,8 @@ main.container {
   padding: 5px 14px 5px 8px;
   gap: 12px;
   min-width: 0;
-  overflow: hidden;
-  animation: glow 3s infinite;
+    overflow: hidden;
+      animation: glow 3s infinite;
 }
 .user-icon-wrapper {
   background: linear-gradient(
@@ -1693,7 +1772,7 @@ main.container {
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
-  animation: pulse 2s infinite;
+    animation: pulse 2s infinite;
   box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
 }
 .user-details-wrapper {
@@ -1712,7 +1791,7 @@ main.container {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--accent-blue);
+    color: var(--accent-blue);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 .user-details-wrapper .balance {
@@ -1723,14 +1802,14 @@ main.container {
   align-items: center;
   gap: 3px;
   white-space: nowrap;
-  text-shadow: 0 0 10px rgba(40, 209, 96, 0.5);
+    text-shadow: 0 0 10px rgba(40, 209, 96, 0.5);
 }
 .btn-refresh-wallet {
   color: var(--primary-gold);
   font-size: 1rem;
   padding: 0 6px;
   margin-left: 2px;
-  transition: var(--transition-bounce);
+    transition: var(--transition-bounce);
   cursor: pointer;
 }
 .btn-refresh-wallet:hover {
@@ -1803,7 +1882,7 @@ main.container {
   height: 55px; /* Membuat logo sedikit lebih besar dan jelas */
   max-width: 150px;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));
+   filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));
   transition: var(--transition-smooth);
 }
 
@@ -1846,7 +1925,7 @@ main.container {
   border: 1px solid rgba(255, 193, 7, 0.3);
   border-radius: 12px;
   color: var(--text-primary);
-  overflow: hidden;
+    overflow: hidden;
   transition: var(--transition-bounce);
 }
 
@@ -1957,7 +2036,7 @@ h6 {
 /* ===== GAYA BARU UNTUK FLOATING SOCIAL MENU ===== */
 .floating-social-menu {
   position: fixed;
-  bottom: 80px;
+  bottom: 90px;
   left: 20px;
   z-index: 1000;
   display: flex;
@@ -2257,7 +2336,7 @@ h6 {
   );
   backdrop-filter: blur(15px);
   color: var(--text-primary);
-  border: 2px solid var(--primary-gold);
+    border: 2px solid var(--primary-gold);
   border-radius: 16px;
   box-shadow: var(--shadow-primary);
   padding: 10px 22px 10px 16px;
@@ -2292,7 +2371,7 @@ h6 {
   margin-left: 4px;
   font-size: 1.08em;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+    text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
 }
 @media (max-width: 500px) {
   .withdraw-float-notif {
@@ -2440,7 +2519,7 @@ h6 {
 }
 .slider-dots button.active {
   background: var(--primary-gold);
-  transform: scale(1.2);
+   transform: scale(1.2);
   box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
 }
 .slider-dots button:hover {
@@ -2479,7 +2558,7 @@ h6 {
     opacity 0.7s cubic-bezier(0.23, 1.12, 0.67, 0.99), box-shadow 0.3s;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   will-change: transform, opacity, box-shadow;
-  filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));
+     filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));
 }
 @keyframes logoBounceSmooth {
   0%,
@@ -2942,9 +3021,9 @@ h6 {
 
 /* Pengecualian untuk tombol Daftar */
 .mobile-footer-nav .nav-item.register-btn {
-  flex-grow: 0; /* Jangan membesar */
-  flex-shrink: 0; /* Jangan menyusut */
-  flex-basis: 68px; /* Beri lebar dasar yang sedikit lebih besar */
+    flex-grow: 0; /* Jangan membesar */
+    flex-shrink: 0; /* Jangan menyusut */
+    flex-basis: 68px; /* Beri lebar dasar yang sedikit lebih besar */
 }
 
 .mobile-footer-nav .nav-item.register-btn .nav-icon-block {
@@ -2953,15 +3032,15 @@ h6 {
     var(--primary-gold),
     var(--accent-orange)
   );
-  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.35);
+    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.35);
 }
 .mobile-footer-nav .nav-item.register-btn .nav-icon-block i,
 .mobile-footer-nav .nav-item.register-btn .nav-text {
-  color: var(--bg-primary);
+    color: var(--bg-primary);
 }
 .mobile-footer-nav .nav-item.register-btn.active .nav-icon-block {
-  background: linear-gradient(135deg, var(--accent-blue), #00d4ff);
-  box-shadow: 0 8px 20px rgba(0, 212, 255, 0.35);
+    background: linear-gradient(135deg, var(--accent-blue), #00d4ff);
+    box-shadow: 0 8px 20px rgba(0, 212, 255, 0.35);
 }
 
 /* ======================================================= */
@@ -2976,7 +3055,7 @@ h6 {
 }
 
 .game-image-container img {
-  width: 100%;
+    width: 100%;
   height: 200px;
   object-fit: cover;
   display: block;
@@ -3010,7 +3089,7 @@ h6 {
     inset 0 -1px 0 rgba(255, 193, 7, 0.1);
   z-index: 3;
   position: relative;
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .rtp-progress-section::before {
@@ -3019,7 +3098,7 @@ h6 {
   top: 0;
   left: -100%;
   width: 100%;
-  height: 100%;
+    height: 100%;
   background: linear-gradient(
     90deg,
     transparent,
@@ -3078,7 +3157,7 @@ h6 {
     rgba(255, 255, 255, 0.1)
   );
   border-radius: 20px;
-  overflow: hidden;
+    overflow: hidden;
   position: relative;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -3095,7 +3174,7 @@ h6 {
 }
 
 .rtp-bar-fill {
-  height: 100%;
+    height: 100%;
   border-radius: 20px;
   background: linear-gradient(
     90deg,
@@ -3153,11 +3232,11 @@ h6 {
 }
 
 .rtp-percentage {
-  color: #fff;
+    color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  white-space: nowrap;
+    white-space: nowrap;
   padding: 6px 12px;
   background: linear-gradient(
     135deg,
