@@ -1,18 +1,24 @@
 <?php
+
 // File: includes/db_connect.php
 
 // Load environment variables
-function loadEnv($path) {
-    if (!file_exists($path)) return;
-    
+function loadEnv($path)
+{
+    if (!file_exists($path)) {
+        return;
+    }
+
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) continue;
-        
+        if (strpos(trim($line), '#') === 0) {
+            continue;
+        }
+
         list($name, $value) = explode('=', $line, 2);
         $name = trim($name);
         $value = trim($value);
-        
+
         if (!array_key_exists($name, $_ENV)) {
             $_ENV[$name] = $value;
         }
@@ -39,40 +45,40 @@ if ($is_demo_mode) {
     $conn = (object) [
         'connect_error' => false,
         'error' => false,
-        'query' => function($sql) {
+        'query' => function ($sql) {
             return (object) [
                 'num_rows' => 0,
-                'fetch_assoc' => function() { return false; }
+                'fetch_assoc' => function () { return false; }
             ];
         },
-        'prepare' => function($sql) {
+        'prepare' => function ($sql) {
             return (object) [
-                'bind_param' => function() { return true; },
-                'execute' => function() { return true; },
-                'get_result' => function() {
+                'bind_param' => function () { return true; },
+                'execute' => function () { return true; },
+                'get_result' => function () {
                     return (object) [
-                        'fetch_assoc' => function() { return false; },
+                        'fetch_assoc' => function () { return false; },
                         'num_rows' => 0
                     ];
                 }
             ];
         },
-        'real_escape_string' => function($str) { return addslashes($str); },
+        'real_escape_string' => function ($str) { return addslashes($str); },
         'insert_id' => 1,
         'affected_rows' => 0,
-        'set_charset' => function($charset) { return true; },
-        'close' => function() { return true; }
+        'set_charset' => function ($charset) { return true; },
+        'close' => function () { return true; }
     ];
 } else {
     // Real database connection untuk production
     try {
         $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-        
+
         // Cek koneksi
         if ($conn->connect_error) {
             // Log error untuk debugging
             error_log("Database connection failed: " . $conn->connect_error);
-            
+
             if (!$is_production) {
                 // Development environment - tampilkan error detail
                 die("
@@ -103,10 +109,10 @@ if ($is_demo_mode) {
                 ");
             }
         }
-        
+
         // Set charset
         $conn->set_charset("utf8");
-        
+
         // Database connection berhasil
         if (isset($_GET['test_db']) && !$is_production) {
             echo "<div style='background: #d4edda; color: #155724; padding: 10px; margin: 10px; border-radius: 5px;'>
@@ -114,10 +120,10 @@ if ($is_demo_mode) {
                     <small>Host: $db_host | Database: $db_name | User: $db_user</small>
                   </div>";
         }
-        
+
     } catch (Exception $e) {
         error_log("Database connection exception: " . $e->getMessage());
-        
+
         if (!$is_production) {
             die("Database Error: " . $e->getMessage());
         } else {
@@ -125,5 +131,3 @@ if ($is_demo_mode) {
         }
     }
 }
-
-?>

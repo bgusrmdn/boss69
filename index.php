@@ -32,27 +32,27 @@ $categories_query_result = $conn->query("SELECT * FROM categories WHERE is_activ
         <div class="slider-track" id="sliderTrack">
             <?php
             $slider = $conn->query("SELECT * FROM banner_slider WHERE is_active=1 ORDER BY sort_order, id");
-            $slider_dir = __DIR__ . '/assets/images/promos/';
-            $slider_url = base_url('assets/images/promos/');
-            $slider_items = [];
-            $ada = false;
-            
-            if ($slider && $slider->num_rows > 0):
-                while ($row = $slider->fetch_assoc()):
-                    $img_path = $slider_dir . $row['image'];
-                    if (file_exists($img_path)) {
-                        $ada = true;
-                        $slider_items[] = $row;
+$slider_dir = __DIR__ . '/assets/images/promos/';
+$slider_url = base_url('assets/images/promos/');
+$slider_items = [];
+$ada = false;
+
+if ($slider && $slider->num_rows > 0):
+    while ($row = $slider->fetch_assoc()):
+        $img_path = $slider_dir . $row['image'];
+        if (file_exists($img_path)) {
+            $ada = true;
+            $slider_items[] = $row;
             ?>
                         <div class="slider-item">
                             <img src="<?= $slider_url . htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['title'] ?? 'Banner Promo') ?>">
                         </div>
             <?php
-                    }
-                endwhile;
-            endif;
-            
-            if (!$ada): ?>
+        }
+    endwhile;
+endif;
+
+if (!$ada): ?>
                 <div class="slider-item">
                     <img src="<?= $slider_url ?>slider1.jpg" alt="Promo Default">
                 </div>
