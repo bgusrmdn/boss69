@@ -1,4 +1,5 @@
 <?php
+
 // File: Hokiraja/get_memos.php (REVISI PENUH - DIJAMIN BENAR)
 session_start();
 require_once 'includes/db_connect.php';

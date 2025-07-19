@@ -1,4 +1,5 @@
 <?php
+
 // File: includes/db_connect.php
 
 // Konfigurasi Database
@@ -7,7 +8,7 @@ $db_user = 'root';
 $db_pass = ''; // Password sudah diisi sesuai permintaan user
 $db_name = 'hokiraja';
 
-// Membuat koneksi  
+// Membuat koneksi
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
 // Cek koneksi

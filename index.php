@@ -30,21 +30,21 @@ $categories_query_result = $conn->query("SELECT * FROM categories WHERE is_activ
     <!-- SLIDER BANNER PROMO OTOMATIS -->
     <?php
     $slider = $conn->query("SELECT * FROM banner_slider WHERE is_active=1 ORDER BY sort_order, id");
-    $slider_dir = __DIR__ . '/assets/images/promos/';
-    $slider_url = base_url('assets/images/promos/');
-    $ada = false;
-    if ($slider && $slider->num_rows > 0):
-        foreach ($slider as $row):
-            $img_path = $slider_dir . $row['image'];
-            if (file_exists($img_path)) {
-                $ada = true;
-    ?>
+$slider_dir = __DIR__ . '/assets/images/promos/';
+$slider_url = base_url('assets/images/promos/');
+$ada = false;
+if ($slider && $slider->num_rows > 0):
+    foreach ($slider as $row):
+        $img_path = $slider_dir . $row['image'];
+        if (file_exists($img_path)) {
+            $ada = true;
+            ?>
                 <div class="slider-item"><img src="/assets/images/promos/<?= htmlspecialchars($row['image']) ?>" alt="Banner Promo"></div>
         <?php
-            }
-        endforeach;
-    endif;
-    if (!$ada): ?>
+        }
+    endforeach;
+endif;
+if (!$ada): ?>
         <div class="slider-item"><img src="<?= $slider_url ?>slider1.jpg" alt="Promo Dummy">
             <div class="text-danger text-center small">Banner tidak ditemukan atau file corrupt.</div>
         </div>

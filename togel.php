@@ -45,18 +45,18 @@ $jenis_bet_list = [
             <?php
             // Query ulang categories agar tidak habis karena fetch_assoc sebelumnya
             $categories2 = $conn->query("SELECT * FROM categories WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
-            if ($categories2 && $categories2->num_rows > 0):
-                while ($cat = $categories2->fetch_assoc()):
-                    $catNameLower = strtolower(str_replace(' ', '', $cat['name']));
-                    $isTogel = $catNameLower == 'togel';
-                    $activeClass = $isTogel ? 'active' : '';
-                    $href = $isTogel ? 'togel' : 'beranda?category=' . $catNameLower;
-            ?>
+if ($categories2 && $categories2->num_rows > 0):
+    while ($cat = $categories2->fetch_assoc()):
+        $catNameLower = strtolower(str_replace(' ', '', $cat['name']));
+        $isTogel = $catNameLower == 'togel';
+        $activeClass = $isTogel ? 'active' : '';
+        $href = $isTogel ? 'togel' : 'beranda?category=' . $catNameLower;
+        ?>
                     <a href="<?php echo $href; ?>" class="category-item <?php echo $activeClass; ?>" data-category="<?php echo htmlspecialchars($cat['name']); ?>">
                         <?php echo htmlspecialchars($cat['name']); ?>
                     </a>
             <?php endwhile;
-            endif; ?>
+endif; ?>
         </div>
     </div>
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/togel.css">

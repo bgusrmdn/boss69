@@ -1,4 +1,5 @@
 <?php
+
 // File: admin/add_user_bank.php
 
 session_start();

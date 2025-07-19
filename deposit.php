@@ -74,7 +74,7 @@ if ($bonuses_result) {
     }
 } else {
     // Fallback jika query gagal
-    $bonuses_options[] = ['id' => 0, 'bonus_name' => '- Silahkan pilih -', 'bonus_code' => 'NONE', 'min_deposit' => 0.00, 'max_bonus_amount' => NULL, 'percentage' => NULL, 'turnover_multiplier' => 1.00, 'is_active' => 1];
+    $bonuses_options[] = ['id' => 0, 'bonus_name' => '- Silahkan pilih -', 'bonus_code' => 'NONE', 'min_deposit' => 0.00, 'max_bonus_amount' => null, 'percentage' => null, 'turnover_multiplier' => 1.00, 'is_active' => 1];
 }
 
 
@@ -304,12 +304,12 @@ if (isset($conn)) {
                                             <?php if (!empty($all_accounts_flat)): ?>
                                                 <?php foreach ($all_accounts_flat as $acc): ?>
                                                     <div class="col">
-                                                        <div class="bank-status-item-modern shadow-sm p-3 rounded-4 d-flex flex-column align-items-center justify-content-center gap-2 <?php echo ($acc['is_active'] ? 'bank-online' : 'bank-offline'); ?>" style="background:#23272b;min-height:120px;">
+                                                        <div class="bank-status-item-modern shadow-sm p-3 rounded-4 d-flex flex-column align-items-center justify-content-center gap-2 <?php echo($acc['is_active'] ? 'bank-online' : 'bank-offline'); ?>" style="background:#23272b;min-height:120px;">
                                                             <img src="assets/images/bank_logos/<?php echo htmlspecialchars($acc['method_logo'] ?? 'default_bank_logo.png'); ?>" alt="<?php echo htmlspecialchars($acc['method_name']); ?>" class="bank-logo-modern mb-2">
                                                             <div class="fw-bold text-white text-center mb-1" style="font-size:1.05rem;line-height:1.2;">
                                                                 <?php echo htmlspecialchars($acc['method_name']); ?>
                                                             </div>
-                                                            <span class="badge rounded-pill <?php echo ($acc['is_active'] ? 'bg-success' : 'bg-danger'); ?> px-3 py-2" style="font-size:0.95rem;">
+                                                            <span class="badge rounded-pill <?php echo($acc['is_active'] ? 'bg-success' : 'bg-danger'); ?> px-3 py-2" style="font-size:0.95rem;">
                                                                 <i class="fas fa-circle me-1"></i><?php echo $acc['is_active'] ? 'Online' : 'Offline'; ?>
                                                             </span>
                                                         </div>

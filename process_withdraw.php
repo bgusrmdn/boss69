@@ -1,4 +1,5 @@
 <?php
+
 // File: Hokiraja/process_withdraw.php
 
 session_start();

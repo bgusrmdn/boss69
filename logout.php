@@ -1,4 +1,5 @@
 <?php
+
 // File: hokiraja/logout.php (REVISI FINAL: Logout Bersih)
 
 session_start();

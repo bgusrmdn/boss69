@@ -113,9 +113,15 @@ $stmt->close();
                 <div class="col-md-6 mb-3">
                     <label for="status" class="form-label">Status Akun*</label>
                     <select class="form-select" id="status" name="status" required>
-                        <option value="active" <?php if ($user['status'] == 'active') echo 'selected'; ?>>Aktif (Active)</option>
-                        <option value="suspended" <?php if ($user['status'] == 'suspended') echo 'selected'; ?>>Ditangguhkan (Suspended)</option>
-                        <option value="banned" <?php if ($user['status'] == 'banned') echo 'selected'; ?>>Diblokir (Banned)</option>
+                        <option value="active" <?php if ($user['status'] == 'active') {
+                            echo 'selected';
+                        } ?>>Aktif (Active)</option>
+                        <option value="suspended" <?php if ($user['status'] == 'suspended') {
+                            echo 'selected';
+                        } ?>>Ditangguhkan (Suspended)</option>
+                        <option value="banned" <?php if ($user['status'] == 'banned') {
+                            echo 'selected';
+                        } ?>>Diblokir (Banned)</option>
                     </select>
                 </div>
             </div>

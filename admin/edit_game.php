@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
     $is_active = isset($_POST['is_active']) ? 1 : 0;
     $old_image = $_POST['old_image']; // Ambil nama gambar lama
-    $game_url = isset($_POST['game_url']) ? trim($_POST['game_url']) : NULL;
+    $game_url = isset($_POST['game_url']) ? trim($_POST['game_url']) : null;
 
     $gambar_thumbnail = $old_image; // Defaultnya adalah gambar lama
     $image_input_type = $_POST['image_input_type'] ?? 'file';
@@ -123,7 +123,9 @@ $providers = $conn->query("SELECT nama_provider FROM providers ORDER BY nama_pro
                 <label for="provider" class="form-label">Provider</label>
                 <select class="form-select" id="provider" name="provider" required>
                     <?php while ($p = $providers->fetch_assoc()): ?>
-                        <option value="<?php echo $p['nama_provider']; ?>" <?php if ($game['provider'] == $p['nama_provider']) echo 'selected'; ?>>
+                        <option value="<?php echo $p['nama_provider']; ?>" <?php if ($game['provider'] == $p['nama_provider']) {
+                            echo 'selected';
+                        } ?>>
                             <?php echo htmlspecialchars($p['nama_provider']); ?>
                         </option>
                     <?php endwhile; ?>
@@ -133,12 +135,24 @@ $providers = $conn->query("SELECT nama_provider FROM providers ORDER BY nama_pro
             <div class="mb-3">
                 <label for="kategori" class="form-label">Kategori</label>
                 <select class="form-select" id="kategori" name="kategori" required>
-                    <option value="Slot" <?php if ($game['kategori'] == 'Slot') echo 'selected'; ?>>Slot</option>
-                    <option value="Live Casino" <?php if ($game['kategori'] == 'Live Casino') echo 'selected'; ?>>Live Casino</option>
-                    <option value="Sports" <?php if ($game['kategori'] == 'Sports') echo 'selected'; ?>>Sports</option>
-                    <option value="Togel" <?php if ($game['kategori'] == 'Togel') echo 'selected'; ?>>Togel</option>
-                    <option value="Fishing" <?php if ($game['kategori'] == 'Fishing') echo 'selected'; ?>>Fishing</option>
-                    <option value="Arcade" <?php if ($game['kategori'] == 'Arcade') echo 'selected'; ?>>Arcade</option>
+                    <option value="Slot" <?php if ($game['kategori'] == 'Slot') {
+                        echo 'selected';
+                    } ?>>Slot</option>
+                    <option value="Live Casino" <?php if ($game['kategori'] == 'Live Casino') {
+                        echo 'selected';
+                    } ?>>Live Casino</option>
+                    <option value="Sports" <?php if ($game['kategori'] == 'Sports') {
+                        echo 'selected';
+                    } ?>>Sports</option>
+                    <option value="Togel" <?php if ($game['kategori'] == 'Togel') {
+                        echo 'selected';
+                    } ?>>Togel</option>
+                    <option value="Fishing" <?php if ($game['kategori'] == 'Fishing') {
+                        echo 'selected';
+                    } ?>>Fishing</option>
+                    <option value="Arcade" <?php if ($game['kategori'] == 'Arcade') {
+                        echo 'selected';
+                    } ?>>Arcade</option>
                 </select>
             </div>
 
@@ -146,14 +160,14 @@ $providers = $conn->query("SELECT nama_provider FROM providers ORDER BY nama_pro
                 <label class="form-label">Gambar Saat Ini</label><br>
                 <?php
                 $gambar_thumbnail = $game['gambar_thumbnail'];
-                if (filter_var($gambar_thumbnail, FILTER_VALIDATE_URL)) {
-                    // Jika URL eksternal, gunakan langsung
-                    $image_src = $gambar_thumbnail;
-                } else {
-                    // Jika file lokal, tambahkan path folder
-                    $image_src = "/assets/images/games/" . htmlspecialchars($gambar_thumbnail);
-                }
-                ?>
+if (filter_var($gambar_thumbnail, FILTER_VALIDATE_URL)) {
+    // Jika URL eksternal, gunakan langsung
+    $image_src = $gambar_thumbnail;
+} else {
+    // Jika file lokal, tambahkan path folder
+    $image_src = "/assets/images/games/" . htmlspecialchars($gambar_thumbnail);
+}
+?>
                 <img src="<?php echo $image_src; ?>" alt="Gambar saat ini" width="150" class="mb-2 img-thumbnail" onerror="this.src='https://placehold.co/150x150/EEE/31343C?text=No+Image';">
             </div>
 
@@ -193,12 +207,16 @@ $providers = $conn->query("SELECT nama_provider FROM providers ORDER BY nama_pro
             </div>
 
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="is_featured" name="is_featured" value="1" <?php if ($game['is_featured'] == 1) echo 'checked'; ?>>
+                <input type="checkbox" class="form-check-input" id="is_featured" name="is_featured" value="1" <?php if ($game['is_featured'] == 1) {
+                    echo 'checked';
+                } ?>>
                 <label class="form-check-label" for="is_featured">Tampilkan sebagai Game Unggulan (Featured)?</label>
             </div>
 
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="is_active" name="is_active" value="1" <?php if ($game['is_active'] == 1) echo 'checked'; ?>>
+                <input type="checkbox" class="form-check-input" id="is_active" name="is_active" value="1" <?php if ($game['is_active'] == 1) {
+                    echo 'checked';
+                } ?>>
                 <label class="form-check-label" for="is_active">Aktifkan Game (Tampilkan di situs)?</label>
             </div>
 

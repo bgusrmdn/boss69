@@ -141,7 +141,7 @@ if (isset($_SESSION['error_message'])) {
                                         } else {
                                             echo 'Tanpa Bonus';
                                         }
-                                        ?>
+                            ?>
                                     </td>
                                     <td>
                                         <?php if (!empty($row['proof_of_transfer_url'])): ?>

@@ -118,10 +118,10 @@ require_once __DIR__ . '/site_config.php';
         unset($_SESSION['login_username']);
     }
 
-    // Notifikasi untuk PENDAFTARAN BERHASIL
-    if (isset($_SESSION['registration_success'])) {
-        $username = $_SESSION['username'];
-        echo "<script>
+// Notifikasi untuk PENDAFTARAN BERHASIL
+if (isset($_SESSION['registration_success'])) {
+    $username = $_SESSION['username'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Pendaftaran Berhasil!',
@@ -134,11 +134,11 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['registration_success']);
-    }
-    if (isset($_SESSION['pending_deposit_alert'])) {
-        $message = $_SESSION['pending_deposit_alert'];
-        echo "<script>
+    unset($_SESSION['registration_success']);
+}
+if (isset($_SESSION['pending_deposit_alert'])) {
+    $message = $_SESSION['pending_deposit_alert'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Akses Dibatasi',
@@ -150,13 +150,13 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['pending_deposit_alert']);
-    }
+    unset($_SESSION['pending_deposit_alert']);
+}
 
-    // === BARU: Notifikasi setelah BERHASIL mengirim permintaan deposit ===
-    if (isset($_SESSION['deposit_submitted_alert'])) {
-        $message = $_SESSION['deposit_submitted_alert'];
-        echo "<script>
+// === BARU: Notifikasi setelah BERHASIL mengirim permintaan deposit ===
+if (isset($_SESSION['deposit_submitted_alert'])) {
+    $message = $_SESSION['deposit_submitted_alert'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Permintaan Terkirim!',
@@ -169,13 +169,13 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['deposit_submitted_alert']);
-    }
+    unset($_SESSION['deposit_submitted_alert']);
+}
 
-    // === BARU: Notifikasi setelah BERHASIL mengirim permintaan WITHDRAW ===
-    if (isset($_SESSION['withdraw_submitted_alert'])) {
-        $message = $_SESSION['withdraw_submitted_alert'];
-        echo "<script>
+// === BARU: Notifikasi setelah BERHASIL mengirim permintaan WITHDRAW ===
+if (isset($_SESSION['withdraw_submitted_alert'])) {
+    $message = $_SESSION['withdraw_submitted_alert'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Permintaan Terkirim!',
@@ -188,30 +188,30 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['withdraw_submitted_alert']);
+    unset($_SESSION['withdraw_submitted_alert']);
+}
+
+// === BARU: PENJAGA HALAMAN WITHDRAW ===
+// Cek hanya jika pengguna mencoba mengakses halaman withdraw.php
+if ($current_page == 'withdraw.php' && isset($_SESSION['user_id'])) {
+    $check_pending_wd_stmt = $conn->prepare("SELECT id FROM transactions WHERE user_id = ? AND type = 'withdraw' AND status = 'pending'");
+    $check_pending_wd_stmt->bind_param("i", $_SESSION['user_id']);
+    $check_pending_wd_stmt->execute();
+    $has_pending_wd = $check_pending_wd_stmt->get_result()->num_rows > 0;
+    $check_pending_wd_stmt->close();
+
+    if ($has_pending_wd) {
+        // Atur notifikasi dan redirect ke beranda
+        $_SESSION['pending_withdraw_alert'] = "Anda masih memiliki transaksi penarikan yang sedang diproses. Mohon tunggu hingga selesai sebelum membuat permintaan baru.";
+        header("Location: beranda.php");
+        exit();
     }
+}
 
-    // === BARU: PENJAGA HALAMAN WITHDRAW ===
-    // Cek hanya jika pengguna mencoba mengakses halaman withdraw.php
-    if ($current_page == 'withdraw.php' && isset($_SESSION['user_id'])) {
-        $check_pending_wd_stmt = $conn->prepare("SELECT id FROM transactions WHERE user_id = ? AND type = 'withdraw' AND status = 'pending'");
-        $check_pending_wd_stmt->bind_param("i", $_SESSION['user_id']);
-        $check_pending_wd_stmt->execute();
-        $has_pending_wd = $check_pending_wd_stmt->get_result()->num_rows > 0;
-        $check_pending_wd_stmt->close();
-
-        if ($has_pending_wd) {
-            // Atur notifikasi dan redirect ke beranda
-            $_SESSION['pending_withdraw_alert'] = "Anda masih memiliki transaksi penarikan yang sedang diproses. Mohon tunggu hingga selesai sebelum membuat permintaan baru.";
-            header("Location: beranda.php");
-            exit();
-        }
-    }
-
-    // Notifikasi untuk PENDING WITHDRAW (ditampilkan di beranda.php)
-    if (isset($_SESSION['pending_withdraw_alert'])) {
-        $message = $_SESSION['pending_withdraw_alert'];
-        echo "<script>
+// Notifikasi untuk PENDING WITHDRAW (ditampilkan di beranda.php)
+if (isset($_SESSION['pending_withdraw_alert'])) {
+    $message = $_SESSION['pending_withdraw_alert'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Akses Dibatasi',
@@ -223,22 +223,22 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['pending_withdraw_alert']);
-    }
-    ?>
+    unset($_SESSION['pending_withdraw_alert']);
+}
+?>
     <?php
 
-    // Memanggil navigasi (header) berdasarkan status login
-    if (isset($_SESSION['user_id'])) {
-        require_once __DIR__ . '/nav-user.php'; // Header untuk user yang login
-        require_once __DIR__ . '/sidebar-user.php'; // Sidebar Offcanvas untuk user yang login
-    } else {
-        require_once __DIR__ . '/nav-guest.php'; // Header untuk guest
-    }
-    // === BARU: Notifikasi untuk Halaman Profil ===
-    if (isset($_SESSION['profil_success'])) {
-        $message = $_SESSION['profil_success'];
-        echo "<script>
+// Memanggil navigasi (header) berdasarkan status login
+if (isset($_SESSION['user_id'])) {
+    require_once __DIR__ . '/nav-user.php'; // Header untuk user yang login
+    require_once __DIR__ . '/sidebar-user.php'; // Sidebar Offcanvas untuk user yang login
+} else {
+    require_once __DIR__ . '/nav-guest.php'; // Header untuk guest
+}
+// === BARU: Notifikasi untuk Halaman Profil ===
+if (isset($_SESSION['profil_success'])) {
+    $message = $_SESSION['profil_success'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Berhasil!', text: '" . htmlspecialchars($message) . "', icon: 'success',
@@ -246,11 +246,11 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['profil_success']);
-    }
-    if (isset($_SESSION['profil_error'])) {
-        $message = $_SESSION['profil_error'];
-        echo "<script>
+    unset($_SESSION['profil_success']);
+}
+if (isset($_SESSION['profil_error'])) {
+    $message = $_SESSION['profil_error'];
+    echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Gagal!', text: '" . htmlspecialchars($message) . "', icon: 'error',
@@ -258,6 +258,6 @@ require_once __DIR__ . '/site_config.php';
                 });
             });
         </script>";
-        unset($_SESSION['profil_error']);
-    }
-    ?>
+    unset($_SESSION['profil_error']);
+}
+?>

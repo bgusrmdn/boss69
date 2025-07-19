@@ -89,7 +89,9 @@ if ($cat_res) {
                 <select class="form-control" id="kategori" name="kategori" required>
                     <option value="">Pilih Kategori</option>
                     <?php foreach ($category_options as $cat): ?>
-                        <option value="<?php echo htmlspecialchars($cat); ?>" <?php if (($provider['kategori'] ?? '') == $cat) echo 'selected'; ?>><?php echo htmlspecialchars($cat); ?></option>
+                        <option value="<?php echo htmlspecialchars($cat); ?>" <?php if (($provider['kategori'] ?? '') == $cat) {
+                            echo 'selected';
+                        } ?>><?php echo htmlspecialchars($cat); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

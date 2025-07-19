@@ -1,4 +1,5 @@
 <?php
+
 // File: process_deposit_non_api.php (REVISI FINAL 3: Perbaikan Tipe Data bind_param yang BENAR)
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -52,7 +53,7 @@ if (empty($amount) || $amount < 10000) {
     exit();
 }
 
-$proof_filename = NULL;
+$proof_filename = null;
 if (isset($_FILES['proof_of_transfer']) && $_FILES['proof_of_transfer']['error'] == UPLOAD_ERR_OK) {
     $target_dir = "assets/uploads/proofs/";
     if (!is_dir($target_dir)) {

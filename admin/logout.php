@@ -1,4 +1,5 @@
 <?php
+
 // File: admin/logout.php
 
 session_start();
