@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
     <title>Demo Integrasi Cursor dengan Browser</title>
     <style>
         body {
@@ -11,8 +12,16 @@
             margin: 0 auto;
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
             color: #333;
             min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
         
         .container {
@@ -20,13 +29,18 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
         }
         
         h1 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
-            font-size: 2.5em;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            word-wrap: break-word;
+            line-height: 1.2;
         }
         
         .section {
@@ -35,6 +49,8 @@
             border-radius: 10px;
             background: #f8f9fa;
             border-left: 4px solid #007bff;
+            width: 100%;
+            overflow-wrap: break-word;
         }
         
         .button-group {
@@ -42,6 +58,8 @@
             gap: 15px;
             flex-wrap: wrap;
             margin: 15px 0;
+            justify-content: flex-start;
+            align-items: center;
         }
         
         .cursor-btn {
@@ -52,11 +70,13 @@
             border-radius: 8px;
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            min-width: fit-content;
         }
         
         .cursor-btn:hover {
@@ -74,14 +94,16 @@
             gap: 10px;
             margin: 15px 0;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         input[type="text"] {
             flex: 1;
+            min-width: 200px;
             padding: 10px;
             border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
         }
         
         input[type="text"]:focus {
@@ -120,6 +142,9 @@
             padding: 2px 5px;
             border-radius: 3px;
             font-family: 'Courier New', monospace;
+            font-size: clamp(12px, 1.5vw, 14px);
+            word-break: break-all;
+            overflow-wrap: break-word;
         }
         
         .protocol-demo {
@@ -140,8 +165,133 @@
             padding: 10px;
             border-radius: 5px;
             font-family: monospace;
+            font-size: clamp(12px, 1.5vw, 14px);
             word-break: break-all;
+            overflow-wrap: break-word;
             margin: 10px 0;
+            line-height: 1.4;
+        }
+        
+        /* Media Queries untuk Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                margin: 0;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 0;
+                border-radius: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .button-group {
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .cursor-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                flex: 1;
+                min-width: 120px;
+                max-width: 200px;
+                justify-content: center;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            input[type="text"] {
+                min-width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .protocol-url {
+                font-size: 11px;
+                padding: 8px;
+            }
+            
+            .protocol-demo {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 5px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 12px;
+            }
+            
+            .cursor-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                min-width: 100px;
+            }
+            
+            .protocol-url {
+                font-size: 10px;
+                padding: 6px;
+            }
+        }
+        
+        /* Zoom dan Scale Fix */
+        @media (min-width: 1400px) {
+            body {
+                max-width: 1400px;
+                font-size: 18px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .cursor-btn {
+                font-size: 18px;
+                padding: 14px 28px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .cursor-btn {
+                background: #007bff;
+                color: white;
+            }
         }
     </style>
 </head>

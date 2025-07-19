@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>Demo Integrasi Cursor dengan Browser - Fixed</title>
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Banner Section */
+        .header-banner {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300"><path d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1008,192,1032,224L1056,256L1056,0L1008,0C960,0,864,0,768,0C672,0,576,0,480,0C384,0,288,0,192,0C96,0,48,0,24,0L0,0Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat;
+            background-size: 100% 100%;
+            opacity: 0.1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .main-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+        
+        .main-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .status-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid rgba(0,123,255,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #007bff, #6f42c1);
+            border-radius: 2px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .section p {
+            color: #6c757d;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* Button Styles */
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .cursor-btn {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+        }
+        
+        .cursor-btn::before {
+            content: "🎯";
+            font-size: 1.2em;
+        }
+        
+        .cursor-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cursor-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.4);
+        }
+        
+        .cursor-btn:hover::after {
+            left: 100%;
+        }
+        
+        .cursor-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Input Group */
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+            transform: translateY(-1px);
+        }
+        
+        /* Status Messages */
+        .status {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            border-left: 4px solid;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        
+        .error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f1aeb5 100%);
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        
+        /* Protocol Demo */
+        .protocol-demo {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .protocol-demo h3 {
+            color: #ecf0f1;
+            margin: 0 0 20px 0;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        }
+        
+        .protocol-url {
+            background: rgba(52, 73, 94, 0.8);
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            word-break: break-all;
+            overflow-wrap: break-word;
+            margin: 15px 0;
+            line-height: 1.6;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .protocol-url strong {
+            color: #3498db;
+        }
+        
+        /* Code Styles */
+        code {
+            background: rgba(241, 243, 244, 0.8);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            word-break: break-all;
+            overflow-wrap: break-word;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        /* Responsive Media Queries */
+        @media (max-width: 768px) {
+            .header-banner {
+                padding: 30px 15px;
+            }
+            
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .container {
+                padding: 25px;
+                border-radius: 15px;
+            }
+            
+            .section {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .cursor-btn {
+                padding: 12px 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            input[type="text"] {
+                min-width: 100%;
+            }
+            
+            .status-badges {
+                gap: 8px;
+            }
+            
+            .protocol-demo {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-banner {
+                padding: 20px 10px;
+            }
+            
+            .container {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .cursor-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .protocol-url {
+                padding: 12px 15px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Large Screen Optimization */
+        @media (min-width: 1400px) {
+            .main-title {
+                font-size: 4.5rem;
+            }
+            
+            .container {
+                padding: 50px;
+            }
+            
+            .section {
+                padding: 35px;
+            }
+            
+            .cursor-btn {
+                padding: 18px 30px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .header-banner {
+                background: #2c3e50;
+                color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .cursor-btn {
+                background: #007bff !important;
+                color: white !important;
+            }
+        }
+        
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(33, 37, 41, 0.95);
+                color: #f8f9fa;
+            }
+            
+            .section {
+                background: linear-gradient(145deg, #343a40 0%, #495057 100%);
+                color: #f8f9fa;
+            }
+            
+            .section h2 {
+                color: #ffffff;
+            }
+            
+            .section p {
+                color: #adb5bd;
+            }
+            
+            input[type="text"] {
+                background: #495057;
+                border-color: #6c757d;
+                color: #f8f9fa;
+            }
+            
+            code {
+                background: rgba(73, 80, 87, 0.8);
+                color: #f8f9fa;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <div class="header-content">
+            <h1 class="main-title">🎯 Demo Integrasi Cursor</h1>
+            <p class="main-subtitle">Browser Integration untuk Linux Pop!OS</p>
+            <div class="status-badges">
+                <span class="badge">✅ Responsive Design</span>
+                <span class="badge">🔒 Secure Installation</span>
+                <span class="badge">🌐 Cross-Browser</span>
+                <span class="badge">📱 Mobile Friendly</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="section">
+                <h2>📁 Buka Direktori Standar</h2>
+                <p>Klik tombol di bawah untuk membuka direktori umum di Cursor IDE:</p>
+                
+                <div class="button-group">
+                    <a href="cursor:///home/user/Documents" class="cursor-btn">Documents</a>
+                    <a href="cursor:///home/user/Desktop" class="cursor-btn">Desktop</a>
+                    <a href="cursor:///home/user/Downloads" class="cursor-btn">Downloads</a>
+                    <a href="cursor://~/workspace" class="cursor-btn">Workspace</a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🛠️ Buka Path Custom</h2>
+                <p>Masukkan path custom yang ingin dibuka di Cursor:</p>
+                
+                <div class="input-group">
+                    <input type="text" id="customPath" placeholder="/home/user/my-project" value="/workspace">
+                    <button class="cursor-btn" onclick="openCustomPath()">Buka di Cursor</button>
+                </div>
+                
+                <div id="pathStatus" class="status" style="display: none;"></div>
+            </div>
+            
+            <div class="section">
+                <h2>🌐 Test URL Protocols</h2>
+                <p>Test berbagai format URL protocol untuk Cursor:</p>
+                
+                <div class="protocol-demo">
+                    <h3>Format yang Didukung:</h3>
+                    
+                    <div class="protocol-url">
+                        <strong>Absolute Path:</strong> cursor:///home/user/project
+                    </div>
+                    
+                    <div class="protocol-url">
+                        <strong>Home Directory:</strong> cursor://~/project
+                    </div>
+                    
+                    <div class="protocol-url">
+                        <strong>Relative Path:</strong> cursor://./project
+                    </div>
+                    
+                    <div class="protocol-url">
+                        <strong>Current Directory:</strong> cursor://.
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="cursor-btn" onclick="testProtocol('cursor:///tmp')">Test /tmp</button>
+                    <button class="cursor-btn" onclick="testProtocol('cursor://~/')">Test Home</button>
+                    <button class="cursor-btn" onclick="testProtocol('cursor://.')">Test Current Dir</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🔧 Diagnostic Tools</h2>
+                <p>Tools untuk membantu troubleshooting integrasi:</p>
+                
+                <div class="button-group">
+                    <button class="cursor-btn" onclick="checkProtocolSupport()">Check Protocol Support</button>
+                    <button class="cursor-btn" onclick="showUserAgent()">Show User Agent</button>
+                    <button class="cursor-btn" onclick="testPermissions()">Test Permissions</button>
+                </div>
+                
+                <div id="diagnosticResult" class="status" style="display: none;"></div>
+            </div>
+            
+            <div class="section">
+                <h2>📚 Cara Menggunakan</h2>
+                <ol style="line-height: 2; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                    <li><strong>Instalasi:</strong> Jalankan script <code>install_cursor_secure.sh</code></li>
+                    <li><strong>Restart Browser:</strong> Tutup dan buka kembali browser Anda</li>
+                    <li><strong>Klik Link:</strong> Klik salah satu tombol "Open in Cursor" di atas</li>
+                    <li><strong>Allow Permission:</strong> Browser akan bertanya permission, klik "Allow"</li>
+                    <li><strong>Cursor Terbuka:</strong> Cursor akan membuka direktori yang dipilih</li>
+                </ol>
+                
+                <div class="status warning">
+                    <strong>💡 Catatan:</strong> Pertama kali menggunakan, browser akan meminta permission untuk membuka aplikasi eksternal. Pastikan untuk mengklik "Allow" atau "Open Application".
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🚨 Troubleshooting</h2>
+                
+                <h3 style="color: #2c3e50; margin: 20px 0 10px 0;">Browser tidak mengenali protocol cursor://</h3>
+                <p>Jalankan command berikut di terminal:</p>
+                <code>xdg-mime default cursor.desktop x-scheme-handler/cursor</code>
+                
+                <h3 style="color: #2c3e50; margin: 20px 0 10px 0;">Permission denied</h3>
+                <p>Periksa permission file:</p>
+                <code>chmod +x ~/.local/bin/cursor</code>
+                
+                <h3 style="color: #2c3e50; margin: 20px 0 10px 0;">Cursor tidak terbuka</h3>
+                <p>Test manual dengan:</p>
+                <code>~/.local/share/cursor/cursor.AppImage --no-sandbox /path/to/test</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCustomPath() {
+            const path = document.getElementById('customPath').value;
+            const status = document.getElementById('pathStatus');
+            
+            if (!path.trim()) {
+                showStatus('pathStatus', 'error', '❌ Path tidak boleh kosong!');
+                return;
+            }
+            
+            // Validasi basic path
+            if (path.includes('..') || path.includes('<') || path.includes('>')) {
+                showStatus('pathStatus', 'error', '❌ Path mengandung karakter yang tidak valid!');
+                return;
+            }
+            
+            showStatus('pathStatus', 'success', `✅ Membuka: ${path}`);
+            
+            // Open dengan cursor protocol
+            const cursorUrl = `cursor://${path}`;
+            try {
+                window.open(cursorUrl);
+                
+                // Update status setelah 2 detik
+                setTimeout(() => {
+                    showStatus('pathStatus', 'warning', '⚠️ Jika Cursor tidak terbuka, periksa instalasi protocol handler atau jalankan quick fix script.');
+                }, 2000);
+            } catch (error) {
+                showStatus('pathStatus', 'error', `❌ Error: ${error.message}`);
+            }
+        }
+        
+        function testProtocol(url) {
+            const status = document.getElementById('diagnosticResult');
+            showStatus('diagnosticResult', 'success', `🧪 Testing: ${url}`);
+            
+            try {
+                window.open(url);
+                setTimeout(() => {
+                    showStatus('diagnosticResult', 'success', `✅ Protocol test berhasil untuk: ${url}`);
+                }, 1000);
+            } catch (error) {
+                showStatus('diagnosticResult', 'error', `❌ Error testing protocol: ${error.message}`);
+            }
+        }
+        
+        function checkProtocolSupport() {
+            const status = document.getElementById('diagnosticResult');
+            
+            // Test apakah browser support custom protocols
+            const testUrl = 'cursor://test';
+            const supported = typeof window.navigator.registerProtocolHandler === 'function';
+            
+            let message = `🔍 Browser Protocol Support: ${supported ? '✅ Supported' : '❌ Not Supported'}<br>`;
+            message += `🌐 User Agent: ${navigator.userAgent.substring(0, 50)}...<br>`;
+            message += `💻 Platform: ${navigator.platform}<br>`;
+            message += `🔗 Test URL: ${testUrl}`;
+            
+            showStatus('diagnosticResult', supported ? 'success' : 'warning', message);
+        }
+        
+        function showUserAgent() {
+            const status = document.getElementById('diagnosticResult');
+            const ua = navigator.userAgent;
+            const platform = navigator.platform;
+            const language = navigator.language;
+            
+            const message = `🌐 User Agent: ${ua}<br>💻 Platform: ${platform}<br>🌍 Language: ${language}`;
+            showStatus('diagnosticResult', 'success', message);
+        }
+        
+        function testPermissions() {
+            const status = document.getElementById('diagnosticResult');
+            
+            // Test various browser capabilities
+            const tests = {
+                'Local Storage': typeof Storage !== 'undefined',
+                'Geolocation': 'geolocation' in navigator,
+                'Service Worker': 'serviceWorker' in navigator,
+                'Protocol Handler': typeof navigator.registerProtocolHandler === 'function',
+                'Clipboard': typeof navigator.clipboard !== 'undefined'
+            };
+            
+            let message = '🔧 Browser Capabilities:<br>';
+            for (const [test, result] of Object.entries(tests)) {
+                message += `${test}: ${result ? '✅' : '❌'}<br>`;
+            }
+            
+            showStatus('diagnosticResult', 'success', message);
+        }
+        
+        function showStatus(elementId, type, message) {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.style.display = 'block';
+            element.innerHTML = message;
+            
+            // Auto-hide setelah 10 detik untuk success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 10000);
+            }
+        }
+        
+        // Auto-detect user home dan update examples
+        window.addEventListener('load', function() {
+            const pathInput = document.getElementById('customPath');
+            
+            // Set default berdasarkan current location
+            if (window.location.pathname.includes('workspace')) {
+                pathInput.value = '/workspace';
+            }
+            
+            // Add smooth scroll untuk internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Handle protocol registration untuk browsers yang support
+        if (typeof navigator.registerProtocolHandler === 'function') {
+            try {
+                console.log('✅ Browser supports protocol handler registration');
+            } catch (e) {
+                console.log('⚠️ Protocol handler registration not available:', e.message);
+            }
+        }
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Enter untuk open custom path
+            if (e.ctrlKey && e.key === 'Enter') {
+                const customPathInput = document.getElementById('customPath');
+                if (document.activeElement === customPathInput) {
+                    openCustomPath();
+                }
+            }
+        });
+        
+        // Add visual feedback untuk buttons
+        document.querySelectorAll('.cursor-btn').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-1px) scale(0.98)';
+            });
+            
+            button.addEventListener('mouseup', function() {
+                this.style.transform = '';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
