@@ -84,7 +84,9 @@ if (!$category) {
                 <input type="number" class="form-control" id="sort_order" name="sort_order" value="<?php echo $category['sort_order']; ?>" required>
             </div>
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="is_active" name="is_active" value="1" <?php if ($category['is_active']) echo 'checked'; ?>>
+                <input type="checkbox" class="form-check-input" id="is_active" name="is_active" value="1" <?php if ($category['is_active']) {
+                    echo 'checked';
+                } ?>>
                 <label class="form-check-label" for="is_active">Aktifkan Kategori?</label>
             </div>
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>

@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (in_array($imageFileType, $allowed_types)) {
                         if (move_uploaded_file($_FILES["gambar_games"]["tmp_name"][$key], $target_file)) {
                             // Ambil URL dari input game_urls[]
-                            $game_url = isset($_POST['game_urls'][$key]) ? trim($_POST['game_urls'][$key]) : NULL;
+                            $game_url = isset($_POST['game_urls'][$key]) ? trim($_POST['game_urls'][$key]) : null;
                             $stmt = $conn->prepare("INSERT INTO games (nama_game, provider, kategori, gambar_thumbnail, is_featured, is_active, game_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
                             $stmt->bind_param("ssssiss", $nama_game, $provider_name, $kategori, $unique_filename, $is_featured, $is_active, $game_url);
                             if ($stmt->execute()) {
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
 
                         // Ambil URL game dari input game_urls[]
-                        $game_url = isset($_POST['game_urls'][$key]) ? trim($_POST['game_urls'][$key]) : NULL;
+                        $game_url = isset($_POST['game_urls'][$key]) ? trim($_POST['game_urls'][$key]) : null;
 
                         // Simpan URL gambar langsung ke database
                         $stmt = $conn->prepare("INSERT INTO games (nama_game, provider, kategori, gambar_thumbnail, is_featured, is_active, game_url) VALUES (?, ?, ?, ?, ?, ?, ?)");

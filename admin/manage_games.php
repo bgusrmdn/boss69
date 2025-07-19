@@ -58,21 +58,21 @@ if (isset($_SESSION['error_message'])) {
                             <tbody>
                                 <?php
                                 $games_result = $conn->query("SELECT * FROM games ORDER BY id DESC LIMIT $per_page OFFSET $offset");
-                                if ($games_result && $games_result->num_rows > 0):
-                                    while ($row = $games_result->fetch_assoc()): ?>
+        if ($games_result && $games_result->num_rows > 0):
+            while ($row = $games_result->fetch_assoc()): ?>
                                         <tr>
                                             <td><?php echo $row['id']; ?></td>
                                             <td>
                                                 <?php
-                                                $gambar_thumbnail = $row['gambar_thumbnail'];
-                                                if (filter_var($gambar_thumbnail, FILTER_VALIDATE_URL)) {
-                                                    // Jika URL eksternal, gunakan langsung
-                                                    $image_src = $gambar_thumbnail;
-                                                } else {
-                                                    // Jika file lokal, tambahkan path folder
-                                                    $image_src = $base_url . 'assets/images/games/' . htmlspecialchars($gambar_thumbnail);
-                                                }
-                                                ?>
+                        $gambar_thumbnail = $row['gambar_thumbnail'];
+                if (filter_var($gambar_thumbnail, FILTER_VALIDATE_URL)) {
+                    // Jika URL eksternal, gunakan langsung
+                    $image_src = $gambar_thumbnail;
+                } else {
+                    // Jika file lokal, tambahkan path folder
+                    $image_src = $base_url . 'assets/images/games/' . htmlspecialchars($gambar_thumbnail);
+                }
+                ?>
                                                 <img src="<?php echo $image_src; ?>" width="80" onerror="this.src='https://placehold.co/80x80/EEE/31343C?text=No+Image';">
                                             </td>
                                             <td><?php echo htmlspecialchars($row['nama_game']); ?></td>
@@ -85,7 +85,7 @@ if (isset($_SESSION['error_message'])) {
                                             </td>
                                         </tr>
                                     <?php endwhile;
-                                else: ?>
+    else: ?>
                                     <tr>
                                         <td colspan="7" class="text-center">Belum ada data game.</td>
                                     </tr>
@@ -100,15 +100,15 @@ if (isset($_SESSION['error_message'])) {
                             <ul class="pagination justify-content-center">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="manage_games?tab=games&page=<?php echo ($page - 1); ?>">« Sebelumnya</a>
+                                        <a class="page-link" href="manage_games?tab=games&page=<?php echo($page - 1); ?>">« Sebelumnya</a>
                                     </li>
                                 <?php endif; ?>
 
                                 <?php
                                 $start_page = max(1, $page - 2);
-                                $end_page = min($total_pages, $page + 2);
+                        $end_page = min($total_pages, $page + 2);
 
-                                if ($start_page > 1): ?>
+                        if ($start_page > 1): ?>
                                     <li class="page-item">
                                         <a class="page-link" href="manage_games?tab=games&page=1">1</a>
                                     </li>
@@ -134,7 +134,7 @@ if (isset($_SESSION['error_message'])) {
 
                                 <?php if ($page < $total_pages): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="manage_games?tab=games&page=<?php echo ($page + 1); ?>">Selanjutnya »</a>
+                                        <a class="page-link" href="manage_games?tab=games&page=<?php echo($page + 1); ?>">Selanjutnya »</a>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -164,9 +164,9 @@ if (isset($_SESSION['error_message'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $providers_result = $conn->query("SELECT * FROM providers ORDER BY sort_order ASC, id ASC");
-                                if ($providers_result && $providers_result->num_rows > 0):
-                                    while ($row = $providers_result->fetch_assoc()): ?>
+                        $providers_result = $conn->query("SELECT * FROM providers ORDER BY sort_order ASC, id ASC");
+        if ($providers_result && $providers_result->num_rows > 0):
+            while ($row = $providers_result->fetch_assoc()): ?>
                                         <tr>
                                             <td><?php echo $row['sort_order']; ?></td>
                                             <td><img src="/assets/images/providers/<?php echo htmlspecialchars($row['logo_provider']); ?>" width="100" onerror="this.src='https://placehold.co/100x40/EEE/31343C?text=No+Logo';"></td>
@@ -177,7 +177,7 @@ if (isset($_SESSION['error_message'])) {
                                             </td>
                                         </tr>
                                 <?php endwhile;
-                                endif; ?>
+        endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -206,9 +206,9 @@ if (isset($_SESSION['error_message'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $categories_result = $conn->query("SELECT * FROM categories ORDER BY sort_order ASC, id ASC");
-                                if ($categories_result && $categories_result->num_rows > 0):
-                                    while ($row = $categories_result->fetch_assoc()): ?>
+        $categories_result = $conn->query("SELECT * FROM categories ORDER BY sort_order ASC, id ASC");
+        if ($categories_result && $categories_result->num_rows > 0):
+            while ($row = $categories_result->fetch_assoc()): ?>
                                         <tr>
                                             <td><?php echo $row['sort_order']; ?></td>
                                             <td><img src="/assets/images/categories/<?php echo htmlspecialchars($row['image']); ?>" width="80" onerror="this.src='https://placehold.co/80x80/EEE/31343C?text=No+Image';"></td>
@@ -220,7 +220,7 @@ if (isset($_SESSION['error_message'])) {
                                             </td>
                                         </tr>
                                 <?php endwhile;
-                                endif; ?>
+        endif; ?>
                             </tbody>
                         </table>
                     </div>

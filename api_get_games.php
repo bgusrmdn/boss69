@@ -1,4 +1,5 @@
 <?php
+
 // File: hokiraja/api_get_games.php (REVISI PROFESIONAL: Memastikan Filter Kategori Bekerja)
 header('Content-Type: application/json');
 require_once 'includes/db_connect.php';
@@ -38,9 +39,15 @@ $offset = ($page - 1) * $per_page;
 
 // Hitung total data
 $count_sql = "SELECT COUNT(*) FROM games WHERE is_active = 1";
-if ($category) $count_sql .= " AND kategori = '" . $conn->real_escape_string($category) . "'";
-if ($provider) $count_sql .= " AND provider = '" . $conn->real_escape_string($provider) . "'";
-if ($search) $count_sql .= " AND nama_game LIKE '%" . $conn->real_escape_string($search) . "%'";
+if ($category) {
+    $count_sql .= " AND kategori = '" . $conn->real_escape_string($category) . "'";
+}
+if ($provider) {
+    $count_sql .= " AND provider = '" . $conn->real_escape_string($provider) . "'";
+}
+if ($search) {
+    $count_sql .= " AND nama_game LIKE '%" . $conn->real_escape_string($search) . "%'";
+}
 $total_games = $conn->query($count_sql)->fetch_row()[0];
 
 $sql .= " ORDER BY id ASC LIMIT $per_page OFFSET $offset"; // Batasi hasil untuk performa

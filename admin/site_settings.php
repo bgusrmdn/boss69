@@ -8,7 +8,9 @@ require_once __DIR__ . '/includes/sidebar.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ppinfo_action'])) {
     $targetDir = dirname(__DIR__) . '/assets/images/payment_provider/';
     $targetDirWeb = '../assets/images/payment_provider/';
-    if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
     if ($_POST['ppinfo_action'] === 'add') {
         $type = $_POST['type'] === 'provider' ? 'provider' : 'payment';
         $image = $_FILES['image'] ?? null;
@@ -61,7 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ppinfo_action'])) {
 // === PROSES BACKEND: UPLOAD & HAPUS GAMBAR BANNER SLIDER ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['slider_action'])) {
     $targetDir = dirname(__DIR__) . '/assets/images/promos/';
-    if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
     if ($_POST['slider_action'] === 'add') {
         $image = $_FILES['slider_image'] ?? null;
         if ($image && $image['tmp_name']) {
@@ -114,7 +118,8 @@ if (!is_dir($upload_dir_qris)) {
 }
 
 // Fungsi untuk mendapatkan base URL dinamis
-function get_base_url() {
+function get_base_url()
+{
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $host = $_SERVER['HTTP_HOST'];
     $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');

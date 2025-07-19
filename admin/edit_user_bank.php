@@ -80,7 +80,9 @@ while ($row = $payment_methods_result->fetch_assoc()) {
                         <?php foreach ($payment_options as $type => $methods): ?>
                             <optgroup label="<?php echo $type; ?>">
                                 <?php foreach ($methods as $method): ?>
-                                    <option value="<?php echo $method['method_code']; ?>" <?php if ($bank['bank_name'] == $method['method_code']) echo 'selected'; ?>>
+                                    <option value="<?php echo $method['method_code']; ?>" <?php if ($bank['bank_name'] == $method['method_code']) {
+                                        echo 'selected';
+                                    } ?>>
                                         <?php echo htmlspecialchars($method['method_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -98,7 +100,9 @@ while ($row = $payment_methods_result->fetch_assoc()) {
                 </div>
             </div>
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="is_primary" name="is_primary" value="1" <?php if ($bank['is_primary'] == 1) echo 'checked'; ?>>
+                <input type="checkbox" class="form-check-input" id="is_primary" name="is_primary" value="1" <?php if ($bank['is_primary'] == 1) {
+                    echo 'checked';
+                } ?>>
                 <label class="form-check-label" for="is_primary">Jadikan Rekening Utama?</label>
             </div>
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>

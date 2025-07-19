@@ -1,4 +1,5 @@
 <?php
+
 // File: api_get_providers.php (REVISI FINAL: Memastikan SEMUA provider aktif tampil)
 
 header('Content-Type: application/json');
@@ -20,7 +21,7 @@ if (in_array(strtolower($category), $special_external_categories)) {
     $stmt = $conn->prepare($sql);
     $cat_lower = strtolower($category);
     $stmt->bind_param("s", $cat_lower);
-} else if ($category === 'all' || empty($category)) {
+} elseif ($category === 'all' || empty($category)) {
     $sql = "SELECT p.nama_provider, p.logo_provider, p.sort_order
             FROM providers p
             ORDER BY p.sort_order ASC, p.id ASC";
@@ -42,7 +43,9 @@ $result = $stmt->get_result();
 $providers = [];
 // Ganti base_url agar selalu benar ke root project
 $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
-if (substr($base_url, -1) !== '/') $base_url .= '/';
+if (substr($base_url, -1) !== '/') {
+    $base_url .= '/';
+}
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         // Ambil URL logo dengan path yang benar (absolut dari root)

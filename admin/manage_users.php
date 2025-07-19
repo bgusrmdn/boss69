@@ -74,11 +74,15 @@ $result = $stmt->get_result();
                                 <td>
                                     <?php
                                     $status = $row['status'];
-                                    $badge_class = 'bg-secondary';
-                                    if ($status == 'active') $badge_class = 'bg-success';
-                                    elseif ($status == 'suspended') $badge_class = 'bg-warning text-dark';
-                                    elseif ($status == 'banned') $badge_class = 'bg-danger';
-                                    ?>
+                            $badge_class = 'bg-secondary';
+                            if ($status == 'active') {
+                                $badge_class = 'bg-success';
+                            } elseif ($status == 'suspended') {
+                                $badge_class = 'bg-warning text-dark';
+                            } elseif ($status == 'banned') {
+                                $badge_class = 'bg-danger';
+                            }
+                            ?>
                                     <span class="badge <?php echo $badge_class; ?>"><?php echo ucfirst($status); ?></span>
                                 </td>
                                 <td><?php echo date('d M Y, H:i', strtotime($row['registration_date'])); ?></td>

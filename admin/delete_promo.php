@@ -1,4 +1,5 @@
 <?php
+
 // File: admin/delete_promo.php
 session_start();
 require_once '../includes/db_connect.php';

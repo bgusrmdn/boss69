@@ -30,7 +30,7 @@ $categories = $conn->query("SELECT * FROM categories WHERE is_active = 1 ORDER B
                         </a>
                     <?php endif; ?>
             <?php endwhile;
-            endif; ?>
+endif; ?>
         </div>
     </div>
 

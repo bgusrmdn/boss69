@@ -1,4 +1,5 @@
 <?php
+
 // File: includes/site_config.php
 
 if (!isset($conn) || !$conn) {
@@ -16,4 +17,6 @@ if ($settings_result) {
 
 // BASE URL OTOMATIS
 $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
-if (substr($base_url, -1) !== '/') $base_url .= '/';
+if (substr($base_url, -1) !== '/') {
+    $base_url .= '/';
+}

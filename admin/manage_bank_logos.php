@@ -9,7 +9,9 @@ $page_title = 'Kelola Logo Bank';
 
 // Proses upload/ganti logo
 define('BANK_LOGO_DIR', __DIR__ . '/../assets/images/bank_logos/');
-if (!is_dir(BANK_LOGO_DIR)) mkdir(BANK_LOGO_DIR, 0777, true);
+if (!is_dir(BANK_LOGO_DIR)) {
+    mkdir(BANK_LOGO_DIR, 0777, true);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method_code'])) {
     $method_code = $_POST['method_code'];
@@ -58,11 +60,11 @@ $banks = $conn->query("SELECT method_code, method_name, logo FROM payment_method
     <h1 class="mb-4">Kelola Logo Bank</h1>
     <?php if (isset($_SESSION['success_message'])): ?>
         <div class="alert alert-success"><?php echo $_SESSION['success_message'];
-                                            unset($_SESSION['success_message']); ?></div>
+        unset($_SESSION['success_message']); ?></div>
     <?php endif; ?>
     <?php if (isset($_SESSION['error_message'])): ?>
         <div class="alert alert-danger"><?php echo $_SESSION['error_message'];
-                                        unset($_SESSION['error_message']); ?></div>
+        unset($_SESSION['error_message']); ?></div>
     <?php endif; ?>
     <div class="row g-4">
         <?php while ($bank = $banks->fetch_assoc()): ?>

@@ -1,4 +1,5 @@
 <?php
+
 // File: admin/delete_game.php
 
 // Mulai session untuk menggunakan notifikasi

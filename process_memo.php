@@ -1,4 +1,5 @@
 <?php
+
 // File: Hokiraja/process_memo.php
 session_start();
 require_once 'includes/db_connect.php';
@@ -54,7 +55,7 @@ switch ($action) {
         }
         break;
 
-    // Tambahkan case untuk 'mark_read' jika diperlukan
+        // Tambahkan case untuk 'mark_read' jika diperlukan
 
     default:
         echo json_encode(['success' => false, 'message' => 'Aksi tidak valid.']);
